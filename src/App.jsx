@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 import { BASE_URL } from '../CONSTANTS'
-import 'jquery';
+import $ from 'jquery';
+import './App.css'
 
 function App() {
-  const [countries, setCountries] = useState([]);
+  const [countryNames, setCountryNames] = useState([]);
   const [allCountryData, setAllCountryData] = useState({});
   const [independentMode, setIndependentMode] = useState(true);
 
@@ -18,27 +18,24 @@ function App() {
     fetch(fetchString)
       .then((response) => response.json())
       .then((data) => {
-        setCountries(data.map((country) => country.name.common))
+        setCountryNames(data.map((country) => country.name.common))
         setAllCountryData(data);
       })
   }, [independentMode]);
 
   return (
     <>
-      <header>
-        <title>Country Comparison</title>
-      </header>
-        <h1>Country Comparison</h1>
-        <span>
-          <input type='checkbox' id='independent' checked={independentMode} onChange={() => setIndependentMode((mode) => !mode)} />
-          <label htmlFor='independent'>Independent countries only</label>
-        </span>
-        <h2>We are looking at {countries.length} different countries</h2>
-        <ul>
-          {countries.sort().map((country, index) => (
-            <li key={index}>{country}</li>
-          ))}
-        </ul>
+      <h1>Country Comparison</h1>
+      <div>
+        <input type='checkbox' id='independent' checked={independentMode} onChange={() => setIndependentMode((mode) => !mode)} />
+        <label htmlFor='independent'>Independent countries only</label>
+      </div>
+      <h2>We are looking at {allCountryData.length} different countries</h2>
+      <ul>
+        {countryNames.sort().map((country, index) => (
+          <li key={index}>{country}</li>
+        ))}
+      </ul>
     </>
   )
 }
