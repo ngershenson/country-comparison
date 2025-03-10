@@ -4,10 +4,25 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background-color: lightcyan;
 }
 
 h1 {
   font-size: 2rem;
   margin: 0;
   padding: .5rem;
+}
+
+li.checkbox-list {
+  list-style-type: none;
+}
+
+.country-card {
+  border: 3px solid #333;
+  border-radius: .5rem;
+  padding: .25rem;
+}
+
+.country-card h3 {
+  text-decoration: 2px underline #888;
 }
