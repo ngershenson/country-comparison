@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import { BASE_URL, FETCH_ALL, FETCH_INDEPENDENT } from '../CONSTANTS'
-import FilterBar from './componenets/FilterBar'
 import ComparisonPanel from './componenets/ComparisonPanel'
+import FilterBar from './componenets/FilterBar';
 import './App.css'
 
 function App() {
   const [countryData, setCountryData] = useState([]);
   const [independentMode, setIndependentMode] = useState(true);
-  const [filter, setFilter] = useState([]);
   const [selectedCountryIds, setSelectedCountryIds] = useState([]);
 
   useEffect(() => {
@@ -24,19 +23,24 @@ function App() {
       setSelectedCountryIds((ids) => [id, ...ids])
     }
   }
+
+  const handleRemoveCountry = (id) => {
+    setSelectedCountryIds(ids => ids.filter(prevId => prevId !== id))
+  }
+
   return (
     <>
-      {/* <h1>Global Stats Explorer</h1>
-      <FilterBar countryNames={countryNames} setFilter={setFilter}/> */}
-
-      <h2>Country Comparison</h2>
-      <ComparisonPanel countryData={countryData} selectedCountryIds={selectedCountryIds} />
+      <h1>Country Comparison</h1>
+      <div className='filter-header'>
+        <FilterBar countryData={countryData} handleSelectCountry={handleSelectCountry} />
+        <span>
+          <input type='checkbox' id='independent' checked={independentMode} onChange={() => setIndependentMode((mode) => !mode)} />
+          <label htmlFor='independent'>Independent countries only</label>
+        </span>
+      </div>
+      <ComparisonPanel countryData={countryData} selectedCountryIds={selectedCountryIds} handleRemoveCountry={handleRemoveCountry} />
 
       <h2>We are looking at {countryData.length} different countries</h2>
-      <div>
-        <input type='checkbox' id='independent' checked={independentMode} onChange={() => setIndependentMode((mode) => !mode)} />
-        <label htmlFor='independent'>Independent countries only</label>
-      </div>
       <ul>
         {countryData.sort((a, b) => a.name.common.localeCompare(b.name.common)).map((country) => (
           <li key={country.cca3} className="checkbox-list">

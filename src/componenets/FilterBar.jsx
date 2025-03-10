@@ -1,52 +1,26 @@
-import React, { useState } from 'react'
-import Autosuggest from 'react-autosuggest/dist/Autosuggest'
+import React from 'react'
+import { Typeahead } from 'react-bootstrap-typeahead'
+import 'react-bootstrap-typeahead/css/Typeahead.css'
 
-export default function FilterBar({ countryNames, setFilter }) {
-  const [value, setValue] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+export default function FilterBar({ countryData, handleSelectCountry }) {
+  const options = countryData.map(country => ({
+    id: country.cca3,
+    label: country.name.common
+  }))
 
-  const getSuggestions = (inputValue) => {
-    const input = inputValue.trim().toLowerCase();
-    return input.length == 0
-      ? []
-      : countryNames.filter((country) => country.toLowerCase().includes(input));
-  };
-
-  const onChange = (event, { newValue }) => {
-    setValue(newValue);
-    setFilter(newValue);
-  };
-
-  const onSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value));
-  };
-
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
-  const onSuggestionSelected = (event, { suggestion, method = 'enter' }) => {
-    setFilteredCountries((countries) => [suggestion, ...countries]);
-    setValue('');
-  };
-  
-  const inputProps = {
-    placeholder: 'Search for a country',
-    value,
-    onChange: onChange
-  };
-
-
+  const onChange = (selected) => {
+    if (selected && selected.length > 0) {
+      handleSelectCountry(selected[0].id)
+    }
+  }
   return (
-    <div>
-      <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={onSuggestionsClearRequested}
-        onSuggestionSelected={onSuggestionSelected}
-        getSuggestionValue={(suggestion) => suggestion}
-        renderSuggestion={(suggestion) => <div>{suggestion}</div>}
-        inputProps={inputProps}
+    <div className='filter-bar'>
+      <Typeahead
+      id="country-typeahead"
+      options={options}
+      placeholder="Seaerch for a country..."
+      onChange={onChange}
+      highlightOnlyResult={true}
       />
     </div>
   )

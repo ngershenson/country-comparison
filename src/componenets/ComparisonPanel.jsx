@@ -1,7 +1,7 @@
 import React from 'react'
 import CountryCard from './CountryCard'
 
-export default function ComparisonPanel({ countryData, selectedCountryIds }) {
+export default function ComparisonPanel({ countryData, selectedCountryIds, handleRemoveCountry }) {
 
     return (
         <div className="comparison-panel">
@@ -11,7 +11,7 @@ export default function ComparisonPanel({ countryData, selectedCountryIds }) {
             {selectedCountryIds.map(id => (
 
                 <div key={id}>
-                    <CountryCard data={countryData.filter(c => c.cca3 === id)[0]} />
+                    <CountryCard data={countryData.filter(c => c.cca3 === id)[0]} handleRemoveCountry={handleRemoveCountry} />
                 </div>
             ))}
         </div>
