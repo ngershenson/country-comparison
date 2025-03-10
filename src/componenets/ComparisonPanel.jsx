@@ -1,22 +1,17 @@
 import React from 'react'
+import CountryCard from './CountryCard'
 
-export default function ComparisonPanel({ data, selectedCountryIds }) {
-    useEffect(() => {
-        $('.comparison-panel').fadeIn(500);
-    }, [filteredCountries]);
-
-    const selectedCountries = filteredCountries.filter(country =>
-        selectedCountryIds.includes(country.cca3)
-    )
+export default function ComparisonPanel({ countryData, selectedCountryIds }) {
 
     return (
-        <div className="comparison-panel" style={{ display: 'none' }}>
-            <h2>Comparison Panel</h2>
-            {filteredCountries.map(country => (
-                <div key={country.cca3}>
-                    <h3>{country.name.common}</h3>
-                    <p>Capital: {country.capital?.[0]}</p>
-                    <p>Population: {country.population.toLocaleString()}</p>
+        <div className="comparison-panel">
+            <h2>Selected Countries are</h2>
+            {selectedCountryIds.length === 0
+                && <p>Please Select Countries to View Comparison</p>}
+            {selectedCountryIds.map(id => (
+
+                <div key={id}>
+                    <CountryCard data={countryData.filter(c => c.cca3 === id)[0]} />
                 </div>
             ))}
         </div>

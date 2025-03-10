@@ -21,6 +21,7 @@ li.checkbox-list {
   border: 3px solid #333;
   border-radius: .5rem;
   padding: .25rem;
+  background-color: beige;
 }
 
 .country-card h3 {
