@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -29,5 +33,19 @@ li.checkbox-list {
 }
 
 .country-card h3 {
+  margin-top: .25rem;
   text-decoration: 2px underline #888;
+}
+
+.dropdown-menu {
+  background-color: beige;
+  border: 2px solid #333;
+  border-radius: .5rem;
+  padding: .25rem .5rem;
+}
+
+a.dropdown-item {
+  display: block;
+  text-decoration: none;
+  color: #333;
 }

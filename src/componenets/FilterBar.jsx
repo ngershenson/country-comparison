@@ -13,14 +13,15 @@ export default function FilterBar({ countryData, handleSelectCountry }) {
       handleSelectCountry(selected[0].id)
     }
   }
+
   return (
     <div className='filter-bar'>
       <Typeahead
-      id="country-typeahead"
-      options={options}
-      placeholder="Seaerch for a country..."
-      onChange={onChange}
-      highlightOnlyResult={true}
+        id="country-typeahead"
+        options={options}
+        placeholder="Seaerch for a country..."
+        onChange={onChange}
+        highlightOnlyResult={true}
       />
     </div>
   )

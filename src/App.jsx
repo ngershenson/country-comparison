@@ -40,7 +40,7 @@ function App() {
       </div>
       <ComparisonPanel countryData={countryData} selectedCountryIds={selectedCountryIds} handleRemoveCountry={handleRemoveCountry} />
 
-      <h2>We are looking at {countryData.length} different countries</h2>
+      {/* <h2>We are looking at {countryData.length} different countries</h2>
       <ul>
         {countryData.sort((a, b) => a.name.common.localeCompare(b.name.common)).map((country) => (
           <li key={country.cca3} className="checkbox-list">
@@ -56,7 +56,7 @@ function App() {
             </label>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </>
   )
 }
