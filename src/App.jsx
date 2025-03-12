@@ -2,18 +2,20 @@ import { useState, useEffect } from 'react'
 import { BASE_URL, FETCH_ALL, FETCH_INDEPENDENT } from '../CONSTANTS'
 import ComparisonPanel from './componenets/ComparisonPanel'
 import FilterBar from './componenets/FilterBar';
+import QuizPanel from './componenets/QuizPanel';
 import './App.css'
 
 function App() {
   const [countryData, setCountryData] = useState([]);
   const [independentMode, setIndependentMode] = useState(true);
   const [selectedCountryIds, setSelectedCountryIds] = useState([]);
+  const [activeQuiz, setActiveQuiz] = useState(false);
 
   useEffect(() => {
     fetch(BASE_URL + (independentMode ? FETCH_INDEPENDENT : FETCH_ALL))
       .then((response) => response.json())
       .then((data) => {
-        setCountryData(data);
+        setCountryData(data.sort((a, b) => a.name.common.localeCompare(b.name.common)));
       })
       .catch((error) => console.error("Error fetching countries", error));
   }, [independentMode]);
@@ -38,25 +40,8 @@ function App() {
           <label htmlFor='independent'>Independent countries only</label>
         </span>
       </div>
-      <ComparisonPanel countryData={countryData} selectedCountryIds={selectedCountryIds} handleRemoveCountry={handleRemoveCountry} />
-
-      {/* <h2>We are looking at {countryData.length} different countries</h2>
-      <ul>
-        {countryData.sort((a, b) => a.name.common.localeCompare(b.name.common)).map((country) => (
-          <li key={country.cca3} className="checkbox-list">
-            <input id={country.cca3} type="checkbox" onChange={() => {
-              if (!selectedCountryIds.includes(country.cca3)) {
-                setSelectedCountryIds((ids) => [country.cca3, ...ids])
-              } else {
-                setSelectedCountryIds((ids) => ids.filter(id => id !== country.cca3))
-              }
-            }} />
-            <label htmlFor={country.cca3}>
-              {country.name.common}
-            </label>
-          </li>
-        ))}
-      </ul> */}
+      {activeQuiz || <ComparisonPanel countryData={countryData} selectedCountryIds={selectedCountryIds} handleRemoveCountry={handleRemoveCountry} />}
+      <QuizPanel activeQuiz={activeQuiz} setActiveQuiz={setActiveQuiz} />
     </>
   )
 }
