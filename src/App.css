@@ -25,6 +25,11 @@ li.checkbox-list {
   list-style-type: none;
 }
 
+.country-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 .country-card {
   border: 3px solid #333;
   border-radius: .5rem;
